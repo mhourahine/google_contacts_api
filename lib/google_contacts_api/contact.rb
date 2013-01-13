@@ -27,6 +27,11 @@ module GoogleContactsApi
       _link = self["link"].find { |l| l.rel == "http://schemas.google.com/contacts/2008/rel#photo" }
       _link ? _link.href : nil
     end
+
+    # Returns Contact Name
+    def name
+      self["title"]
+    end
     
     # Returns binary data for the photo. You can probably
     # use it in a data-uri. This is in PNG format.
@@ -82,6 +87,11 @@ module GoogleContactsApi
     # Doesn't yet distinguish protocols
     def ims
       self["gd$im"] ? self["gd$im"].map { |i| i.address } : []
+    end
+
+    # Returns string representation
+    def to_s
+      "#{name}, Emails: #{emails.to_s}, Phone Numbers: #{phone_numbers.to_s}"
     end
   end
 end
